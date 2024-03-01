@@ -1,9 +1,12 @@
 # Ignore the node_modules directory
 /node_modules
-/web
 
 # Ignore the page.js file
 page.js
 
 # Ignore the .env file
 .env
+
+package.json
+package-lock.json
+ContractABI.json
