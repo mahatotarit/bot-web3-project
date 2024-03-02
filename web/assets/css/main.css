@@ -64,30 +64,93 @@
     }
 
 
-    // refferal seciton | reffer section
-.reffer_mini_btn .pending{
-    padding: 5px 10px;
-    border: 2px solid white;
-    border-radius: 5px;
-    background-color: #415007;
-}
-.reffer_mini_btn .success{
-    padding: 5px 10px;
-    color: black;
-    border-radius: 5px;
-    background-color: #bbe70c;
-}
-.refferal_div_heading{
-    border-bottom: 2px solid white;
-    padding-bottom: 10px;
-}
-.refferal_div_body > .row_body{
-    border-bottom: 1px solid #60750a;
-    padding-bottom: 10px;
-}
-.refferal_div_heading, .refferal_div_body > .row_body{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
+
+
+    /* ======================== refferal | reffer ========================== */
+       .link_tab{
+        padding: 10px;
+    }
+    .refferal_link_input{
+        border-radius: 10px;
+        box-shadow: 00px 00px 3px rgb(121, 121, 121);
+        padding: 10px;
+        font-size: 12px;
+    }
+    .refferal_link_input_button{
+        border-radius: 10px;
+        box-shadow: 00px 00px 3px rgb(121, 121, 121);
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 10px;
+        font-weight: bold;
+        background-color: #bce70c;
+        color: black;
+    }
+    .refferal_heaing_h5{
+        position: relative;
+        display: flex;
+        justify-content: start;
+        align-items: end;
+    }
+    .refferal_heaing_h5::after{
+      content: "";
+      background-color: #bce70c;
+      height: 3px;
+      width: 150px;
+      position: absolute;
+    }
+    .refferal_point_details{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .refferal_point_details .reff_th_box{
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #314423;
+      color: white;
+      box-shadow:0px 0px 4px white;
+    }
+    .refferal_rules_div{
+        border-radius: 10px;
+        box-shadow: 00px 00px 3px rgb(121, 121, 121);
+        padding: 10px;  
+    }
+    .refferal_user_detailas{
+        border-radius: 10px;
+        margin-top: 20px;
+        color: black;
+        overflow: hidden;
+        box-shadow:0px 0px 4px #bce70c;
+    }
+    .friends_details_box_heading{
+        margin-bottom: 10px;
+    }
+    
+    .refferal_user_detailas_heaing{
+        background-color: #bce70c;
+        padding: 10px 20px 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .user_details_value_div{
+        padding: 15px;
+    }
+    .user_details_row{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .clicked_copy_btn{
+        background-color: #97b90b;
+        transform: scale(0.95);
+        transform-origin:center;
+    }
+    .user_details_row b{
+       color: white;
+    }
