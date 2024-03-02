@@ -115,19 +115,12 @@ window.onload = () => {
       bscProvider
         .getTransaction(txhash)
         .then(async (transaction) => {
-          if (
-            transaction == null ||
-            transaction == undefined ||
-            transaction == ''
-          ) {
+          if (transaction == null || transaction == undefined ||transaction == '') {
+            buy_loading('end');
             alert('accepct only bnb on bnb chain');
           } else {
-            if (
-              admin_address.toString().toLowerCase() == toAddress.toLowerCase()
-            ) {
-              document.querySelector(
-                '.error_box',
-              ).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato</i>`;
+            if ( admin_address.toString().toLowerCase() == toAddress.toLowerCase()) {
+              document.querySelector('.error_box',).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato</i>`;
 
               await purchase_complete(tx, mss_amount);
             }
@@ -231,28 +224,17 @@ window.onload = () => {
     // send msn to user
     async function purchase_complete(tx, sending_token_amount) {
       let userAddress = tx.from;
-      const amountToSend = ethers.utils.parseUnits(
-        sending_token_amount.toString(),
-        18,
-      );
+      const amountToSend = ethers.utils.parseUnits(sending_token_amount.toString(),18,);
 
       try {
         const tx = await contract.transfer(userAddress, amountToSend);
-        showNotification(
-          `🎉 You bought ${sending_token_amount} MSN 🎉`,
-          'green',
-          '#b0ffb0',
-        );
+        showNotification(`🎉 You bought ${sending_token_amount} MSN 🎉`,'green','#b0ffb0',);
         buy_loading('end');
 
         await minimum_buy_complete(userAddress);
       } catch (error) {
         buy_loading('end');
-        showNotification(
-          `If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato`,
-          'red',
-          '#ffb0b0',
-        );
+        showNotification( `If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato`, 'red','#ffb0b0',);
       }
     }
 
@@ -355,7 +337,7 @@ window.onload = () => {
 
     // ======================== buy function  =====================================
     async function send_request_to_buy() {
-      await buy_loading('start');
+      buy_loading('start');
 
       const gasPrice_bnb = await window.web3.eth.getGasPrice();
       const gasLimit_bnb = '22000';
@@ -365,8 +347,12 @@ window.onload = () => {
 
       let buy_amount = usdt_input.value.toString();
       if (bnb_usdt_op.value == 'usdt') {
-        buy_amount = (1 / bnb_usdt_price).toFixed(9).toString();
+        buy_amount = parseFloat(usdt_input.value * (1 / bnb_usdt_price))
+          .toFixed(9)
+          .toString();
       }
+
+      // 1 MSN = (1/20000) * (1 BNB / 410 USDT)
 
       const transactionObject = {
         from: user_wallet_address,
