@@ -401,22 +401,50 @@ let tokenAbi = [
     type: 'function',
   },
   {
-    constant: true,
-    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
     name: 'getAllUsers',
     outputs: [
       {
-        internalType: 'tuple[]',
-        name: '',
+        components: [
+          {
+            internalType: 'address',
+            name: 'userAddress',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'userId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'referralUser',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'myReferral',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'referralPoint',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'min_buy_status',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct MSN.User[]',
         type: 'tuple[]',
       },
     ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    constant: true,
+    stateMutability: 'view',
     inputs: [
       {
         internalType: 'address',
@@ -424,17 +452,46 @@ let tokenAbi = [
         type: 'address',
       },
     ],
+    type: 'function',
     name: 'getAllUsers_refferal_user',
     outputs: [
       {
-        internalType: 'tuple[]',
-        name: '',
+        components: [
+          {
+            internalType: 'address',
+            name: 'userAddress',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'userId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'referralUser',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'myReferral',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'referralPoint',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'min_buy_status',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct MSN.User[]',
         type: 'tuple[]',
       },
     ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
   },
   {
     constant: true,
@@ -464,6 +521,31 @@ let tokenAbi = [
     ],
     payable: false,
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'userAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: 'status',
+        type: 'bool',
+      },
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
+    name: 'response',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ];
