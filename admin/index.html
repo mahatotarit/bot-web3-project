@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        :root{
+            --white_black:#EEEEEE;
+            --blue_white:#c4d2d6;
+        }
+        input,.p-i{
+            outline: none;
+            padding: 3px;
+            font-weight: bold;
+        }
+        .main{
+            width: 85%;
+            margin: 00px auto 00px auto;
+            padding: 10px;
+        }
+        .section{
+            padding: 10px;
+            box-shadow: 0px 0px 2px black;
+            border-radius: 10px;
+            background-color: var(--white_black);
+            margin: 20px 00px 20px 00px;
+        }
+        .all_user_table th, .all_user_table  td , .all_user_table tr{
+           padding: 5px;
+        }
+        .sec_heading_div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .button_c{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        .reffer_h_t{
+            min-width: 25%;
+            display: inline-block;
+        }
+        .admin_heading_div{
+            background-color: var(--blue_white);
+            padding: 10px;
+            border-radius: 5px;
+            width: 90%;
+            margin: 00px auto ;
+
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column ;
+
+            position: sticky;
+            top: 00px;
+            z-index: +99;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin_heading_div">
+        <h1>Admin Dashboard</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button><a href="#section_1">All User</a></button> &nbsp;
+            <button><a href="#section_2">Refferal Details</a></button> &nbsp;
+            <button><a href="#section_3">BNB tx</a></button>
+        </div>
+    </div>
+    <div class="main">
+       
+        <div class="section_1 section" id="section_1">
+         <div class="sec_heading_div">
+            <h2>All User : </h2>
+            <div class="button_c">
+                <a href="">User Id In array format</a>
+            </div>
+         </div>
+         <div>
+            <table class="all_user_table" border style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>User Address</th>
+                        <th>User Id</th>
+                        <th>User Reffered</th>
+                        <th>User Refferal Point</th>
+                        <th>User Mini Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6</td>
+                        <td>3485769</td>
+                        <td>12</td>
+                        <td>1200</td>
+                        <td>Success</td>
+                    </tr>
+                     <tr>
+                        <td>0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6</td>
+                        <td>3485769</td>
+                        <td>12</td>
+                        <td>1200</td>
+                        <td>Success</td>
+                    </tr>
+                     <tr>
+                        <td>0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6</td>
+                        <td>3485769</td>
+                        <td>12</td>
+                        <td>1200</td>
+                        <td>Success</td>
+                    </tr>
+                </tbody>
+            </table>
+         </div>
+        </div>
+
+        <div class="section_2 section" id="section_2">
+            <div class="sec_heading_div">
+                <h2>Refferal : </h2>
+            </div>
+            <div>
+               <span class="reffer_h_t">1 - Metamask connect reffer point : </span><input type="number" class="me_co_re_po"> &nbsp;&nbsp;&nbsp; <button class="p-i">Update</button>
+               <br><br>
+               <span class="reffer_h_t">2 - Minimum buy reffer point : </span><input type="number" class="me_co_re_po"> &nbsp;&nbsp;&nbsp; <button class="p-i">Update</button>
+            </div>
+        </div>
+
+        <div class="section_3 section" id="section_3">
+            <div class="sec_heading_div">
+                <h2>Get BNB tx : to - <small>0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6</small></h2>
+            </div>
+            <div>
+                User Address <input type="text" placeholder="user address"> <button class="p-i">Get</button>
+            </div>
+            <br>
+            <div>
+                <div class="tx_hash_row"><b>1. </b><a href="">0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6</a></div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
