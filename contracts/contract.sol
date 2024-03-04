@@ -26,7 +26,7 @@ interface IERC20Errors {
      */
     error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed);
 
-    /**
+    /*
      * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.
      * @param approver Address initiating an approval operation.
      */
@@ -589,6 +589,8 @@ contract MSN is ERC20 {
 
     uint256 public per_reffer = 200;
     uint256 public per_reffer_with_minimum_buy = 2000;
+    uint256 public per_usdt_msn = 20000;
+    string public tele_bot_link = "https://t.me/@botusername";
     
     modifier onlyContractOwner() {
         require(msg.sender == contract_owner, "Only contractOwner");
@@ -627,6 +629,31 @@ contract MSN is ERC20 {
     // change per minimum buy token value
     function per_reffer_with_minimum_buy_change(uint256 _new_minimumbuy_per_reffer) external onlyContractOwner{
         per_reffer_with_minimum_buy = _new_minimumbuy_per_reffer;
+    }
+
+    // change per usdt to msn token value
+    function per_msn_usdt_change(uint256 _new_per_msn_usdt_reffer) external onlyContractOwner{
+        per_usdt_msn = _new_per_msn_usdt_reffer;
+    }
+
+    // change per usdt to msn token value
+    function bot_link_change(string memory new_bot_link) external onlyContractOwner{
+        tele_bot_link = new_bot_link;
+    }
+
+    // ==================================================
+    function show_per_reffer_with_minimum_buy() public view returns(uint256){
+        return per_reffer_with_minimum_buy;
+    }
+    function show_per_reffer() public view returns(uint256){
+        return per_reffer;
+    }
+    function show_per_usdt_msn() public view returns(uint256){
+        return per_usdt_msn;
+    }
+
+    function show_bot_link() public view returns(string memory){
+        return tele_bot_link;
     }
     
     // ======================================================
@@ -667,7 +694,7 @@ contract MSN is ERC20 {
 
         for (uint i = 0; i < userTelegramId.length; i++) {
             if (userTelegramId[i] == _userId) {
-                emit response(_userAddress,false, "Your Telegram ID is already linked with a wallet address.");
+                emit response(_userAddress,false, "Your Telegram ID is already linked with another wallet address.");
                 return false;
             }
         }
@@ -738,6 +765,23 @@ contract MSN is ERC20 {
         }
 
       }
+    }
+
+    // withdraw funcs
+    function withdraw_funds(address _user_address) external onlyContractOwner returns(bool status){
+        if(_user_address != address(0)){
+            uint256 points = tele[_user_address].referralPoint;
+
+            if(points>0){
+               tele[_user_address].referralPoint = 0;
+               emit response(_user_address,true,'withdraw success');
+               return true;
+            }else{
+               emit response(_user_address,false,'you have not point');
+               return true;
+            }
+
+        }
     }
     
     // delete user function

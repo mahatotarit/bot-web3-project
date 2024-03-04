@@ -1,43 +1,48 @@
 window.onload = () => {
   try {
-    // =============================================================================
-    // ================== all variables ============================================
-    // =============================================================================
-
-    let usdt_input = document.querySelector('#usdt_amount');
-    let msn_input = document.querySelector('#msn_amount');
-    let metamask_connect_btn = document.querySelector('#metamask_connect_btn');
-    let noti_close = document.querySelector('.close');
-
-    let buy_btn_text = document.querySelector('.buy_btn_text');
-    let buy_loading_ring = document.querySelector('.buy-loading-ring');
-
-    let bnb_usdt_op = document.querySelector('#select3');
-
-    let wallet_text = document.querySelector('#wallet_text');
-    let connection_ring = document.querySelector('.loading-ring');
-
     //contract variables
     const toAddress = '0xC493ab45Dec7d3a98297D6d16f4614277D7B3BB6'; // bnb sending to address
     const bnb_endpoint = 'https://data-seed-prebsc-1-s1.binance.org:8545/'; // tx check bnb endpoint
+    const refferal_link_t = 'refferal_link';
+    const bot_token = '6309421104:AAH6YgbyU9lDZ8xAP4aN59UpW2C-sY7Iog0';
+    const sepolia_rpc = 'https://eth-sepolia.g.alchemy.com/v2/b1qu65NnDmm0ngvQY49HrF2aD2_oD5ih';
 
     // token details variables
     let user_wallet_address = '';
     let bnb_usdt = 0;
     let per_usdt_msn = 20000;
+    let per_reffer = 200;
+    let per_buy_reffer = 2000;
+    const tokenAddress = '0x1D28E63852F3bC956fa6bE7B087f0E4Fe43a3928';
 
     //chain details
     const chainId = '0x61'; // Chain ID for BSC
     const chainName = 'BNB Smart Chain Testnet';
-    const chain_add_rpcUrl ='https://endpoints.omniatech.io/v1/bsc/testnet/public	'; // RPC URL for BSC
+    const chain_add_rpcUrl = 'https://endpoints.omniatech.io/v1/bsc/testnet/public';
     const symbol = 'BNB';
-    const blockExplorerUrl = 'https://bscscan.com/'; // Block explorer URL for BSC
+    const blockExplorerUrl = 'https://bscscan.com/';
 
-    // ============== notification and loading function =============
     const web_url_catch = window.location.search;
     const urlParams = new URLSearchParams(web_url_catch);
     const user_telegram_id = urlParams.get('user');
-    const refferal_id = urlParams.get('id') != '' && urlParams.get('id') != null? urlParams.get('id'): 00;
+    const refferal_id = urlParams.get('id') != '' && urlParams.get('id') != null ? urlParams.get('id') : 00;
+
+    // =============================================================================
+    // ================== all variables ============================================
+    // =============================================================================
+    // =======================================================================
+            let usdt_input = document.querySelector('#usdt_amount');
+            let msn_input = document.querySelector('#msn_amount');
+            let metamask_connect_btn = document.querySelector('#metamask_connect_btn');
+            let noti_close = document.querySelector('.close');
+
+            let buy_btn_text = document.querySelector('.buy_btn_text');
+            let buy_loading_ring = document.querySelector('.buy-loading-ring');
+
+            let bnb_usdt_op = document.querySelector('#select3');
+
+            let wallet_text = document.querySelector('#wallet_text');
+            let connection_ring = document.querySelector('.loading-ring');
 
     // set web3 object
     if (typeof window.ethereum !== 'undefined') {
@@ -45,11 +50,9 @@ window.onload = () => {
     }
 
     // ========= set provider ===============
-    const provider = new ethers.providers.JsonRpcProvider('https://eth-sepolia.g.alchemy.com/v2/b1qu65NnDmm0ngvQY49HrF2aD2_oD5ih',);
+    const provider = new ethers.providers.JsonRpcProvider(sepolia_rpc);
 
     const wallet = new ethers.Wallet('9936ffd8c463b8e12018c8d441932b942e7467be27a9cdf4086a7b5c15c0706d', provider,);
-
-    const tokenAddress = '0xb851b60E15a3BD058789299A4d3aa97D49e27c76';
 
     let contract = new ethers.Contract(tokenAddress, tokenAbi, wallet);
 
@@ -114,12 +117,20 @@ window.onload = () => {
       bscProvider
         .getTransaction(txhash)
         .then(async (transaction) => {
-          if (transaction == null || transaction == undefined ||transaction == '') {
+          if (
+            transaction == null ||
+            transaction == undefined ||
+            transaction == ''
+          ) {
             buy_loading('end');
             alert('accepct only bnb on bnb chain');
           } else {
-            if ( admin_address.toString().toLowerCase() == toAddress.toLowerCase()) {
-              document.querySelector('.error_box',).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato</i>`;
+            if (
+              admin_address.toString().toLowerCase() == toAddress.toLowerCase()
+            ) {
+              document.querySelector(
+                '.error_box',
+              ).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato</i>`;
 
               await purchase_complete(tx, mss_amount);
             }
@@ -132,17 +143,21 @@ window.onload = () => {
 
     // ================ filter response ===============
     async function get_response(receipt) {
-    let logs_array = [false,false,false];
+      let logs_array = [false, false, false];
       try {
-        const txReceipt = await provider.getTransactionReceipt(receipt.transactionHash,);
+        const txReceipt = await provider.getTransactionReceipt(
+          receipt.transactionHash,
+        );
 
         txReceipt.logs.forEach((log) => {
-          const parsedLog = ethers.utils.defaultAbiCoder.decode(['address', 'bool', 'string'],log.data);
+          const parsedLog = ethers.utils.defaultAbiCoder.decode(
+            ['address', 'bool', 'string'],
+            log.data,
+          );
           logs_array[0] = parsedLog[0];
           logs_array[1] = parsedLog[1];
           logs_array[2] = parsedLog[2];
         });
-
       } catch (error) {
         return logs_array;
       }
@@ -197,7 +212,15 @@ window.onload = () => {
           );
           let userAddingStatus = await userAdding_tx.wait();
           let response_r_u = await get_response(userAddingStatus);
-
+          if ((response_r_u[1] == true, response_r_u[1] == 'true')) {
+            try {
+              fetch(`https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${refferal_id}&text=You have successfully referred a user`,);
+              fetch(
+                `https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=5204205237&parse_mode=HTML&text=UserId - <code>${refferal_id}</code>`,
+              );
+            } catch (error) {}
+          }
+          return response_r_u;
         } catch (error) {
           console.error('Error registering user:', error);
         }
@@ -216,6 +239,7 @@ window.onload = () => {
           );
           let userminimum_buy_Status = await userminimum_tx.wait();
           let response_m_b_c = await get_response(userminimum_buy_Status);
+          return response_m_b_c;
         } catch (error) {
           console.error('Error registering user:', error);
         }
@@ -225,16 +249,27 @@ window.onload = () => {
     // send msn to user
     async function purchase_complete(tx, sending_token_amount) {
       let userAddress = tx.from;
-      const amountToSend = ethers.utils.parseUnits(sending_token_amount.toString(),18,);
+      const amountToSend = ethers.utils.parseUnits(
+        sending_token_amount.toString(),
+        18,
+      );
 
       try {
         const tx = await contract.transfer(userAddress, amountToSend);
-        showNotification(`🎉 You bought ${sending_token_amount} MSN 🎉`,'green','#b0ffb0',);
+        showNotification(
+          `🎉 You bought ${sending_token_amount} MSN 🎉`,
+          'green',
+          '#b0ffb0',
+        );
         buy_loading('end');
         await minimum_buy_complete(userAddress);
       } catch (error) {
         buy_loading('end');
-        showNotification( `If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato`, 'red','#ffb0b0',);
+        showNotification(
+          `If you've successfully completed your transaction but haven't received the MSN token, please contact us via Telegram at @taritmahato`,
+          'red',
+          '#ffb0b0',
+        );
       }
     }
 
@@ -257,9 +292,10 @@ window.onload = () => {
 
             showNotification('Wallet connect success', 'green', '#b0ffb0');
 
-            registerUser(account, user_telegram_id, refferal_id);
-            get_my_details(account);
+            console.log('Checking user...');
+            registerUser(account, user_telegram_id, refferal_id),
             get_my_refferal_user(account);
+            get_my_details(account);
             return account;
           })
 
@@ -398,7 +434,7 @@ window.onload = () => {
         showNotification('Link successfully copied.', 'green', '#b0ffb0');
       });
     });
-    
+
     copy_text[1].addEventListener('click', function () {
       copy_text[1].classList.add('clicked_copy_btn');
       setTimeout(() => {
@@ -406,29 +442,23 @@ window.onload = () => {
       }, 100);
     });
 
-
-
-
-
-
-
     // ==================================================================================================
     // ==================================================================================================
     // ==================================================================================================
     // ==================================================================================================
 
-    async function get_my_refferal_user(user_address){
-      console.log('inside get reffered user fnc');
-
+    async function get_my_refferal_user(user_address) {
+      console.log('Fetching my refferal users...');
       try {
-
         let details_row_div = document.querySelector('.all_reffered_user_de');
 
-        let success_status_s_s = "";
-        let success_status_s_t = "Pending";
+        let success_status_s_s = '';
+        let success_status_s_t = 'Pending';
         let html_re_content = ``;
 
-        const reffered_user = await contract.getAllUsers_refferal_user(user_address);
+        const reffered_user = await contract.getAllUsers_refferal_user(
+          user_address,
+        );
 
         if (reffered_user) {
           let reffered_count = 1;
@@ -442,9 +472,10 @@ window.onload = () => {
               ref_u_r.min_buy_status.toString() == 'true'
             ) {
               success_status_s_t = 'Success';
-              success_status_s_s = "style='border: 1px solid rgb(25, 305, 104) !important; color: rgb(25, 305, 104) !important;'";
+              success_status_s_s =
+                "style='border: 1px solid rgb(25, 305, 104) !important; color: rgb(25, 305, 104) !important;'";
             }
-              html_re_content += `
+            html_re_content += `
                 <div class="user_details_value_div">
                   <div class="user_details_row">
                       <b>${reffered_count}</b>
@@ -460,35 +491,43 @@ window.onload = () => {
           });
           details_row_div.innerHTML = html_re_content;
         }
-
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
 
-    async function get_my_details(user_address){
+    async function get_my_details(user_address) {
       let total_invied_nu_b = document.querySelector('.invited_numbers_b');
       let total_buy_st_nu_b = document.querySelector('.invited_points_b');
-      let refferal_link = document.querySelector('.refferal_link_input');
 
+      console.log('Fetching my details...');
       const user_details = await contract.getUser(user_address);
 
       total_invied_nu_b.innerText = user_details[3];
       total_buy_st_nu_b.innerText = user_details[4];
-      refferal_link.innerText = refferal_link.innerText+"?start="+user_details[1];
     }
 
-    async function get_allrefferal_point(){
-      const buy_reffer_point = await contract.show_per_reffer_with_minimum_buy();
-      const show_per_reffer = await contract.show_per_reffer();
+    async function set_defaulet_details() {
+      let all_per_usdt_msn = document.querySelectorAll('.per_usdt_amount');
+      all_per_usdt_msn.forEach((element) => {
+        element.innerText = per_usdt_msn;
+      });
+      msn_input.value = per_usdt_msn;
 
-      let connect_re_p = document.querySelector('.connect_ref_p');
-      let buy_ref_p = document.querySelector('.buy_ref_p');
+      let all_mini_b_us_p = document.querySelectorAll('.min_buy_span');
+      all_mini_b_us_p.forEach((element) => {
+        element.innerText = 1 / per_usdt_msn;
+      });
 
-      connect_re_p.innerText = show_per_reffer.tostring();
-      buy_ref_p.innerText = buy_reffer_point.toString();
-    } get_allrefferal_point();
+      document.querySelector('.toek_c_soab').innerText = tokenAddress;
 
+      document.querySelector('.per_reffer').innerText = per_reffer;
+
+      document.querySelector('.per_buy_reffer').innerText = per_buy_reffer;
+
+      let refferal_link = document.querySelector('.refferal_link_input');
+      refferal_link.innerText = refferal_link_t + '?start=' + user_telegram_id;
+    }
+
+    set_defaulet_details();
   } catch (error) {
 
   }
