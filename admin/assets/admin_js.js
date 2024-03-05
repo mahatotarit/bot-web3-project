@@ -912,9 +912,7 @@ window.onload = () =>{
   let waiting_p_g_mes = document.querySelector('.waiting_p_g_mes');
   async function get_refferal_points() {
     const per_co_re_p = (await contract.show_per_reffer()).toString();
-    const per_b_re_p = (
-      await contract.show_per_reffer_with_minimum_buy()
-    ).toString();
+    const per_b_re_p = (await contract.show_per_reffer_with_minimum_buy()).toString();
 
     per_connect_point.value = per_co_re_p;
     per_buy_point.value = per_b_re_p;
@@ -1037,7 +1035,7 @@ window.onload = () =>{
     });
 
     // ======================== updateing... ===========================
-    
+
     try {
       let update_per_reffer_input = document.querySelector(
         '.update_per_reffer_input',
@@ -1077,9 +1075,8 @@ window.onload = () =>{
         }
         if (confirm('update ?')) {
           waiting_p_g_mes.innerText = 'Wait...';
-          let per_buy_change_status = await contract.per_reffer_change(
-            update_buy_input.value,
-          );
+          let per_buy_change_status =
+            await contract.per_reffer_with_minimum_buy_change(update_buy_input.value, );
           let reci_1 = per_buy_change_status.wait();
           alert('done');
           waiting_p_g_mes.innerText = '';

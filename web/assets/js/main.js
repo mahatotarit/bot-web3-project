@@ -442,6 +442,53 @@ window.onload = () => {
       }, 100);
     });
 
+    let witn_btn = document.querySelector('.withdraw_funds_btn');
+      witn_btn.addEventListener('click', function () {
+       witn_btn.classList.add('clicked_copy_btn');
+       setTimeout(() => {
+         witn_btn.classList.remove('clicked_copy_btn');
+       }, 100);
+
+       withdraw_points();
+      });
+    
+    //  ===========================================
+    async function withdraw_points(){
+      if(user_wallet_address == null || user_wallet_address == ""){
+        catch_connect_request();
+      }else{
+        showNotification(`Withdraw submited`,'green','#b0ffb0',);
+        witn_btn.innerText = "Wait...";
+        let get_user_point = (await contract.getUser(user_wallet_address))[4];
+        const amountToSend = ethers.utils.parseUnits(get_user_point.toString(),18,);
+
+        if(get_user_point>0){
+
+        }else{
+          witn_btn.innerText = 'Withdraw Funds';
+          showNotification(`You do not have points`, 'red', '#E38F49');
+          return;
+        }
+        try {
+          const withdra_f = await contract.withdraw_funds(user_wallet_address);
+          let get_reci = withdra_f.wait();
+          let with_res = await get_response(get_reci);
+          if(with_res[1]){
+            const tx = await contract.transfer(user_wallet_address, amountToSend);
+            witn_btn.innerText = 'Withdraw Funds';
+            showNotification(`🎉 The withdrawal of ${get_user_point} MSN tokens was successful. 🎉`,'green','#b0ffb0',)
+            showNotification("If you haven't received your MSN token, contact us on Telegram at @taritmahato.",'red','#ffb0b0');document.querySelector( '.error_box',).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you haven't received your MSN token, contact us on Telegram at @taritmahato.</i>`;
+          }else{
+            witn_btn.innerText = 'Withdraw Funds';
+            document.querySelector('.error_box').innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you haven't received your MSN token, contact us on Telegram at @taritmahato.</i>`;
+          }
+        } catch (error) { 
+          witn_btn.innerText = 'Withdraw Funds';
+          document.querySelector('.error_box',).innerHTML = `<i style="color:red; padding:5px; background-color:white;">If you haven't received your MSN token, contact us on Telegram at @taritmahato.</i>`;
+        }
+      }
+    }
+
     // ==================================================================================================
     // ==================================================================================================
     // ==================================================================================================
@@ -529,6 +576,6 @@ window.onload = () => {
 
     set_defaulet_details();
   } catch (error) {
-
+    console.log(error);
   }
 };

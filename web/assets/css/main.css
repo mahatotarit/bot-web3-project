@@ -154,3 +154,16 @@
     .user_details_row b{
        color: white;
     }
+
+    .withdraw_funds_btn{
+        padding:5px;
+        text-align:center;
+        border:1px solid white;
+        display:block;
+        width:100%;
+        margin:15px 00px;
+        border-radius:10px;
+        font-weight:bold;
+        transform-origin:center;
+        background-color:rgb(138, 9, 9);
+    }
