@@ -34,12 +34,41 @@
                     <tr>
                         <th>User Address</th>
                         <th>User Id</th>
+                        <th>referralUser</th>
                         <th>User Reffered</th>
                         <th>User Refferal Point</th>
                         <th>User Mini Status</th>
                     </tr>
                 </thead>
                 <tbody class="all_user_table_body">
+                    <!--  fetching by js -->
+                </tbody>
+            </table>
+         </div>
+        </div>
+
+        <div class="section_4 section" id="section_4">
+         <div class="sec_heading_div">
+            <h2>Get User : </h2>
+            <input type="text" placeholder="user address" value="" class="single_user_w_a_i">
+            <button class="get_single_user_btn">GET</button>
+            <span class="wait_get_sin_userT"></span>
+            <span></span>
+            <span></span>
+         </div>
+         <div>
+            <table class="single_user_table" border style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>User Address</th>
+                        <th>User Id</th>
+                        <th>referralUser</th>
+                        <th>User Reffered</th>
+                        <th>User Refferal Point</th>
+                        <th>User Mini Status</th>
+                    </tr>
+                </thead>
+                <tbody class="single_user_table_body">
                     <!--  fetching by js -->
                 </tbody>
             </table>
@@ -56,9 +85,9 @@
                 <span></span>
             </div>
             <div>
-               <span class="reffer_h_t">1 - Metamask connect reffer point :&nbsp;</span><input type="number" class="me_co_re_po reffer_c_p" placeholder="connect refferal point"> &nbsp;&nbsp;&nbsp; <button class="p-i">Update</button>
+               <span class="reffer_h_t">1 - Metamask connect reffer point :&nbsp;</span><input type="number" class="me_co_re_po reffer_c_p update_per_reffer_input" placeholder="connect refferal point"> &nbsp;&nbsp;&nbsp; <button class="p-i update_per_reffer_btn">Update</button>
                <br><br>
-               <span class="reffer_h_t">2 - Minimum buy reffer point :&nbsp;</span><input type="number" class="me_co_re_po reffer_b_p" placeholder="buy refferal point"> &nbsp;&nbsp;&nbsp; <button class="p-i">Update</button>
+               <span class="reffer_h_t">2 - Minimum buy reffer point :&nbsp;</span><input type="number" class="me_co_re_po reffer_b_p update_buy_input" placeholder="buy refferal point"> &nbsp;&nbsp;&nbsp; <button class="p-i update_buy_btn">Update</button>
             </div>
         </div>
 
@@ -76,7 +105,6 @@
             </div>
         </div>
 
-
         <div class="section_5 section" id="section_5">
             <div class="sec_heading_div">
                 <h2>Usdt Token : </h2>
@@ -86,7 +114,7 @@
                 <span></span>
             </div>
             <div>
-               <span class="reffer_h_t">Per usdt token value : </span><input type="number" class="p_u_to_v" placeholder="Per usdt token value"> &nbsp;&nbsp;&nbsp; <button class="p-i">Update</button>
+               <span class="reffer_h_t">Per usdt token value : </span><input type="number" class="p_u_to_v" placeholder="Per usdt token value"> &nbsp;&nbsp;&nbsp; <button class="p-i per_msn_usdt_ubtn">Update</button>
             </div>
         </div>
 

@@ -55,3 +55,7 @@
         .tx_hash_row{
             margin-bottom:10px;
         }
+
+        .single_user_table th, .single_user_table td, .single_user_table tr{
+             padding:5px;
+        }
