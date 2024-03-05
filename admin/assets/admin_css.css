@@ -1,0 +1,57 @@
+        :root{
+            --white_black:#EEEEEE;
+            --blue_white:#c4d2d6;
+        }
+        input,.p-i{
+            outline: none;
+            padding: 3px;
+            font-weight: bold;
+        }
+        .main{
+            width: 85%;
+            margin: 00px auto 00px auto;
+            padding: 10px;
+        }
+        .section{
+            padding: 10px;
+            box-shadow: 0px 0px 2px black;
+            border-radius: 10px;
+            background-color: var(--white_black);
+            margin: 20px 00px 20px 00px;
+        }
+        .all_user_table th, .all_user_table  td , .all_user_table tr{
+           padding: 5px;
+        }
+        .sec_heading_div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .button_c{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        .reffer_h_t{
+            min-width: 25%;
+            display: inline-block;
+        }
+        .admin_heading_div{
+            background-color: var(--blue_white);
+            padding: 10px;
+            border-radius: 5px;
+            width: 90%;
+            margin: 00px auto ;
+
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column ;
+
+            position: sticky;
+            top: 00px;
+            z-index: +99;
+        }
+        .tx_hash_row{
+            margin-bottom:10px;
+        }

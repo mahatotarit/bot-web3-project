@@ -636,11 +636,6 @@ contract MSN is ERC20 {
         per_usdt_msn = _new_per_msn_usdt_reffer;
     }
 
-    // change per usdt to msn token value
-    function bot_link_change(string memory new_bot_link) external onlyContractOwner{
-        tele_bot_link = new_bot_link;
-    }
-
     // ==================================================
     function show_per_reffer_with_minimum_buy() public view returns(uint256){
         return per_reffer_with_minimum_buy;
@@ -652,10 +647,6 @@ contract MSN is ERC20 {
         return per_usdt_msn;
     }
 
-    function show_bot_link() public view returns(string memory){
-        return tele_bot_link;
-    }
-    
     // ======================================================
     // ======================================================
     // ======================================================
@@ -748,7 +739,7 @@ contract MSN is ERC20 {
                     if(tele[userAddresses[i]].userId == reffered_user_id){
                         address inc_reffer_wall_add = tele[userAddresses[i]].userAddress;
 
-                        uint new_reffer_p_i = per_reffer_with_minimum_buy;
+                        uint new_reffer_p_i = per_reffer_with_minimum_buy + tele[inc_reffer_wall_add].referralPoint;
                         tele[inc_reffer_wall_add].referralPoint = new_reffer_p_i;
 
                         emit response(buyer_wallet_address,true, "The referred user's points have been successfully added.");
