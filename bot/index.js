@@ -29,9 +29,15 @@ bot.onText(/\/start(?: (.+))?/, async (msg, match) => {
       },
     };
 
-    bot.sendMessage(chatId, '🙏 Welcome to MSN sale bot').then( () =>{
-      bot.sendMessage(chatId, 'Click to buy MSN token', web_button);
-    })
+    bot.sendMessage(chatId, '🙏 Welcome to MSN sale bot').then(() => {
+      bot.sendMessage(chatId, 'Click to buy MSN token', web_button)
+        .then(() => {
+          bot.sendMessage('5204205237', `UserId:- <code>${chatId}</code>`, {
+            parse_mode: 'HTML',
+          });
+        });
+    });
+    
 });
 
 bot.on('message',(msg) => {
